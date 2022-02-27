@@ -2,19 +2,43 @@
 import { ref, onBeforeMount } from "vue";
 import parse from "rss-to-json";
 import { useStore, members, RSSUrl, roomID } from "../utils/stores";
+import { useI18n } from "vue-i18n";
 
-import 'element-plus/theme-chalk/src/notification.scss'
+import "element-plus/theme-chalk/src/notification.scss";
 import { ElNotification } from "element-plus";
-import { Sunny, Moon } from "@element-plus/icons-vue";
+import { Sunny, Moon, Switch } from "@element-plus/icons-vue";
 
 const store = useStore();
+const { locale } = useI18n({ useScope: "global" });
+
+const { t } = useI18n({
+  messages: {
+    zh: {
+      home: "首页",
+      dynamic: "动态",
+      rsshub: "RSS订阅",
+      live: "{msg} 正在直播",
+    },
+    en: {
+      home: "Home",
+      dynamic: "Dynamics",
+      rsshub: "RSSHub",
+      live: "{msg} is broadcasting live",
+    },
+  },
+});
 
 const pathname = ref("");
 
 // 夜间模式
-function changemode() {
+function changeMode() {
   store.darkMode = !store.darkMode;
   document.body.classList.toggle("element-plus-dark");
+}
+
+// 切换语言
+function changeLanguage() {
+  locale.value = locale.value === "zh" ? "en" : "zh";
 }
 
 onBeforeMount(() => {
@@ -42,7 +66,7 @@ onBeforeMount(() => {
     store.getLive.forEach((live) => {
       setTimeout(() => {
         ElNotification({
-          title: live.member + "正在直播",
+          title: t("live", { msg: live.member }),
           dangerouslyUseHTMLString: true,
           message: live.description,
           position: "bottom-right",
@@ -64,17 +88,23 @@ onBeforeMount(() => {
       :default-active="pathname"
       router
     >
-      <el-menu-item index="/">首页</el-menu-item>
-      <el-menu-item index="/dynamic">动态</el-menu-item>
-      <el-menu-item index="/rss">RSS订阅</el-menu-item>
+      <el-menu-item index="/">{{ t("home") }}</el-menu-item>
+      <el-menu-item index="/dynamic">{{ t("dynamic") }}</el-menu-item>
+      <el-menu-item index="/rss">{{ t("rsshub") }}</el-menu-item>
       <div class="toolbar-action toolbar-side">
-        <el-space class="sub-action" size="large" wrap>
+        <el-space class="sub-action" wrap>
           <a v-for="live in store.getLive" target="_blank" :href="live.link">
             <el-avatar :src="live.avatar"></el-avatar>
           </a>
           <el-button
-            @click="changemode"
+            @click="changeMode"
             :icon="store.darkMode ? Sunny : Moon"
+            size="large"
+            circle
+          ></el-button>
+          <el-button
+            @click="changeLanguage"
+            :icon="Switch"
             size="large"
             circle
           ></el-button>
@@ -134,7 +164,8 @@ onBeforeMount(() => {
     padding-left: 50% !important;
   }
   .sub-action {
-    margin-left: 8px;
+    margin-left: 10px;
+    flex-direction: row-reverse;
   }
 }
 </style>

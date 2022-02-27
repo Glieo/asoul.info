@@ -2,8 +2,28 @@
 import { onBeforeMount } from "vue";
 import parse from "rss-to-json";
 import { useStore, members, RSSUrl, uid } from "../utils/stores";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+
+const { t } = useI18n({
+  messages: {
+    zh: {
+      schedule: "日程表",
+      source: "源动态",
+      member: "成员",
+      fans: "粉丝",
+      new: "新粉丝",
+    },
+    en: {
+      schedule: "Schedule",
+      source: "Source",
+      member: "Member",
+      fans: "Fans",
+      new: "New followers",
+    },
+  },
+});
 
 onBeforeMount(() => {
   // 获取官号文章
@@ -101,12 +121,12 @@ onBeforeMount(() => {
       <el-card :body-style="{ padding: '10px' }" shadow="hover">
         <template #header>
           <div class="card-header">
-            <span>日程表</span>
+            <span>{{ t("schedule") }}</span>
             <el-link
               :href="store.getSchedules?.link"
               target="_blank"
               type="info"
-              >原动态</el-link
+              >{{ t("source") }}</el-link
             >
           </div>
         </template>
@@ -132,12 +152,12 @@ onBeforeMount(() => {
         <el-skeleton :loading="store.loading.fans" animated>
           <template #template>
             <el-table :data="store.getFans">
-              <el-table-column label="成员">
+              <el-table-column :label="t(`member`)">
                 <template #default="scope">
                   <el-avatar :src="scope.row.avatar"></el-avatar>
                 </template>
               </el-table-column>
-              <el-table-column label="粉丝数">
+              <el-table-column :label="t(`fans`)">
                 <template #default>
                   <el-skeleton-item variant="text" />
                 </template>
@@ -146,16 +166,16 @@ onBeforeMount(() => {
           </template>
           <template #default>
             <el-table :data="store.getFans">
-              <el-table-column label="成员">
+              <el-table-column :label="t(`member`)">
                 <template #default="scope">
                   <el-avatar :src="scope.row.avatar"></el-avatar>
                 </template>
               </el-table-column>
-              <el-table-column label="粉丝数">
+              <el-table-column :label="t(`fans`)">
                 <template #default="scope">
                   <el-popover
                     placement="top-start"
-                    title="新粉丝"
+                    :title="t(`new`)"
                     :width="200"
                     trigger="hover"
                     :content="scope.row.followers.toLocaleString()"

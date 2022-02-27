@@ -2,8 +2,27 @@
 import { ref, onBeforeMount } from "vue";
 import parse from "rss-to-json";
 import { useStore, planforms, members, RSSUrl, uid } from "../utils/stores";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { d } = useI18n({ useScope: "global" });
+
+const { t } = useI18n({
+  messages: {
+    zh: {
+      title: "最近动态",
+      select: "选择",
+      dialog: "动态筛选",
+      source: "源动态",
+    },
+    en: {
+      title: "Latest Dynamics",
+      select: "Select",
+      dialog: "Dynamic filter",
+      source: "Source",
+    },
+  },
+});
 
 const dynamics = ref(<any[]>[]);
 
@@ -83,7 +102,7 @@ for (planform in store.dynamics) {
 <template>
   <el-dialog
     width="280px"
-    title="动态筛选"
+    :title="t(`dialog`)"
     v-model="dialogVisible"
     v-on:close="reload"
   >
@@ -97,13 +116,13 @@ for (planform in store.dynamics) {
   <el-row justify="center">
     <el-col :md="17" :sm="19" :xs="24">
       <div class="title">
-        <span>最近动态</span>
+        <span>{{ t("title") }}</span>
         <el-button
           class="select-button"
           :loading="store.loading.dynamics"
           @click="dialogVisible = true"
           type="text"
-          >选择</el-button
+          >{{ t("select") }}</el-button
         >
       </div>
 
@@ -117,7 +136,7 @@ for (planform in store.dynamics) {
         <el-timeline>
           <el-timeline-item
             v-for="dynamic in dynamics"
-            :timestamp="new Date(dynamic.created).toLocaleString()"
+            :timestamp="d(dynamic.created, `long`)"
             placement="top"
           >
             <el-card shadow="hover">
@@ -127,9 +146,9 @@ for (planform in store.dynamics) {
                     <el-avatar size="small" :src="dynamic.member"></el-avatar>
                     <el-avatar size="small" :src="dynamic.planform"></el-avatar>
                   </el-space>
-                  <el-link :href="dynamic.link" target="_blank" type="info"
-                    >原动态</el-link
-                  >
+                  <el-link :href="dynamic.link" target="_blank" type="info">{{
+                    t("source")
+                  }}</el-link>
                 </div>
               </template>
               <div>{{ dynamic.title }}</div>
@@ -142,11 +161,11 @@ for (planform in store.dynamics) {
 </template>
 
 <style scoped>
-.select-button{
+.select-button {
   width: 64px;
 }
 .infinite-list {
-  height: calc(100vh - 150px);
+  height: calc(100vh - 137px);
   overflow: auto;
 }
 </style>

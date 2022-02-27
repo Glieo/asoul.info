@@ -1,25 +1,61 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useStore, planforms, members, RSSUrl, uid } from "../utils/stores";
+import { useI18n } from "vue-i18n";
 
-import 'element-plus/theme-chalk/src/message.scss'
+import "element-plus/theme-chalk/src/message.scss";
 import { ElMessage } from "element-plus";
 
 const store = useStore();
+
+const { t } = useI18n({
+  messages: {
+    zh: {
+      title: "RSS订阅",
+      copy: "复制",
+      copySuccess: "复制成功",
+      copyFail: "复制失败",
+      subscribe: "订阅链接",
+      dynamic: "各成员动态",
+      custom: "自定订阅地址",
+      more: "更多规则请查看 ",
+
+      aszb: "ASOUL周报的动态",
+      jbjb: "贾布加布的投稿",
+      hbzl: "魂报的专栏",
+      asch: "ASOUL微博超话",
+    },
+    en: {
+      title: "RSS Subscription",
+      copy: "Copy",
+      copySuccess: "Copy success",
+      copyFail: "Copy fail",
+      subscribe: "Subscribe link",
+      dynamic: "Dynamics of each member",
+      custom: "Custom subscription address",
+      more: "For more rules, please check ",
+
+      aszb: "Dynamics of ASOUL Weekly News",
+      jbjb: "Jabu Gabe's contribution",
+      hbzl: "Column of ASoul Newspaper",
+      asch: "ASOUL Weibo super talk",
+    },
+  },
+});
 
 // 复制内容
 function copy(data: string) {
   navigator.clipboard.writeText(data).then(
     () => {
       ElMessage({
-        message: "复制成功",
+        message: t("copySuccess"),
         type: "success",
         offset: 70,
       });
     },
     () => {
       ElMessage({
-        message: "复制失败",
+        message: t("copyFail"),
         type: "error",
         offset: 70,
       });
@@ -28,17 +64,23 @@ function copy(data: string) {
 }
 
 // 创建自定订阅地址
-const custom_options = [
-  { description: "ASOUL周报的动态", url: RSSUrl["bilibili"] + "1185499676" },
-  { description: "贾布加布的投稿", url: RSSUrl["video"] + "393396916" },
-  { description: "魂报的专栏", url: RSSUrl["article"] + "619440171" },
+const custom_selected = ref(RSSUrl["video"] + "393396916");
+
+const custom_options = computed(() => [
   {
-    description: "ASOUL微博超话",
+    description: t("aszb"),
+    url: RSSUrl["bilibili"] + "1185499676",
+  },
+  { description: t("jbjb"), url: RSSUrl["video"] + "393396916" },
+  {
+    description: t("hbzl"),
+    url: RSSUrl["article"] + "619440171",
+  },
+  {
+    description: t("asch"),
     url: RSSUrl["super"] + "10080861838dd4bdf01b1414e70089ca10d776",
   },
-];
-
-const custom_selected = ref(custom_options[0].url);
+]);
 
 // 创建成员动态选项卡
 const dynamic_url = computed(
@@ -81,14 +123,16 @@ for (planform in store.dynamics) {
   <el-row justify="center">
     <el-col :md="17" :sm="19" :xs="24">
       <div class="title">
-        <span>RSS订阅</span>
+        <span>{{ t("title") }}</span>
       </div>
 
       <el-card class="info-box" shadow="hover">
         <template #header>
           <div class="card-header">
-            <span>各成员动态</span>
-            <el-button @click="copy(dynamic_url)" type="text">复制</el-button>
+            <span>{{ t("dynamic") }}</span>
+            <el-button @click="copy(dynamic_url)" type="text">{{
+              t("copy")
+            }}</el-button>
           </div>
         </template>
         <div class="rss-box">
@@ -100,7 +144,7 @@ for (planform in store.dynamics) {
                 :href="dynamic_url"
                 target="_blank"
                 type="primary"
-                >订阅链接</el-link
+                >{{ t("subscribe") }}</el-link
               >
             </el-tooltip>
           </div>
@@ -110,10 +154,10 @@ for (planform in store.dynamics) {
       <el-card class="info-box" shadow="hover">
         <template #header>
           <div class="card-header">
-            <span>自定订阅地址</span>
-            <el-button @click="copy(custom_selected)" type="text"
-              >复制</el-button
-            >
+            <span>{{ t("custom") }}</span>
+            <el-button @click="copy(custom_selected)" type="text">{{
+              t("copy")
+            }}</el-button>
           </div>
         </template>
         <div class="rss-box">
@@ -129,7 +173,7 @@ for (planform in store.dynamics) {
                 :href="custom_selected"
                 target="_blank"
                 type="primary"
-                >订阅链接</el-link
+                >{{ t("subscribe") }}</el-link
               >
             </el-tooltip>
           </div>
@@ -137,7 +181,7 @@ for (planform in store.dynamics) {
         <el-divider></el-divider>
         <div class="card-header">
           <div>
-            <span>更多规则请查看</span>
+            <span>{{ t("more") }}</span>
             <el-link
               :underline="false"
               href="https://docs.rsshub.app"

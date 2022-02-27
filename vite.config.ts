@@ -11,6 +11,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
+        charset: false,
         additionalData: `@use "./src/styles/index.scss" as *;`,
       },
     },

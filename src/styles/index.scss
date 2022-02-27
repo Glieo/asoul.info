@@ -10,12 +10,16 @@
   ),
   $card: (
     "border-radius": 9px,
-  )
+  ),
+  $popper: (
+    "border-radius": 9px,
+  ),
+  $border-radius:(
+    "base": 9px,
+    'small': 7px,
+  ),
 );
 
-.el-dialog {
-  border-radius: 9px !important;
-}
 .el-cascader-menu {
   min-width: unset !important;
 }
