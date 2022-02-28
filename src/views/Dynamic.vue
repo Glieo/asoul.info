@@ -101,10 +101,10 @@ for (planform in store.dynamics) {
 
 <template>
   <el-dialog
-    width="280px"
-    :title="t(`dialog`)"
     v-model="dialogVisible"
     v-on:close="reload"
+    :title="t(`dialog`)"
+    width="280px"
   >
     <el-cascader-panel
       v-model="store.selected"
@@ -119,8 +119,8 @@ for (planform in store.dynamics) {
         <span>{{ t("title") }}</span>
         <el-button
           class="select-button"
-          :loading="store.loading.dynamics"
           @click="dialogVisible = true"
+          :loading="store.loading.dynamics"
           type="text"
           >{{ t("select") }}</el-button
         >
@@ -143,8 +143,8 @@ for (planform in store.dynamics) {
               <template #header>
                 <div class="card-header">
                   <el-space wrap>
-                    <el-avatar size="small" :src="dynamic.member"></el-avatar>
-                    <el-avatar size="small" :src="dynamic.planform"></el-avatar>
+                    <el-avatar :src="dynamic.member" size="small"></el-avatar>
+                    <el-avatar :src="dynamic.planform" size="small"></el-avatar>
                   </el-space>
                   <el-link :href="dynamic.link" target="_blank" type="info">{{
                     t("source")

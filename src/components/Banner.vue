@@ -61,16 +61,16 @@ function getRandomArrayElements(arr: any[], count: number) {
         <el-carousel
           height="calc(100vh - 110px)"
           :interval="5000"
-          arrow="never"
           trigger="click"
+          arrow="never"
         >
           <el-carousel-item v-for="item in carousel">
             <el-tooltip
-              effect="dark"
-              placement="right"
-              :offset="-130"
-              :show-after="500"
               :content="`uid: ` + item.uid"
+              :show-after="500"
+              :offset="-130"
+              placement="right"
+              effect="dark"
             >
               <img
                 :src="item.image"

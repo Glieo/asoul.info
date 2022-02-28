@@ -140,8 +140,8 @@ for (planform in store.dynamics) {
           <div class="rss-link">
             <el-tooltip :content="dynamic_url" placement="top">
               <el-link
-                :underline="false"
                 :href="dynamic_url"
+                :underline="false"
                 target="_blank"
                 type="primary"
                 >{{ t("subscribe") }}</el-link
@@ -169,8 +169,8 @@ for (planform in store.dynamics) {
           <div class="rss-link">
             <el-tooltip :content="custom_selected" placement="top">
               <el-link
-                :underline="false"
                 :href="custom_selected"
+                :underline="false"
                 target="_blank"
                 type="primary"
                 >{{ t("subscribe") }}</el-link
@@ -183,8 +183,8 @@ for (planform in store.dynamics) {
           <div>
             <span>{{ t("more") }}</span>
             <el-link
-              :underline="false"
               href="https://docs.rsshub.app"
+              :underline="false"
               target="_blank"
               type="primary"
               >docs.rsshub.app</el-link

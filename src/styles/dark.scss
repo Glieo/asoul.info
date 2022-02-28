@@ -6,11 +6,11 @@ $dark-mixed-color: #fc966e;
   background-color: var(--dark-bg-color-base);
 
   .el-menu {
-    --el-menu-border-color: null;
+    border-bottom: unset;
     --el-menu-bg-color: var(--dark-bg-color-light-1);
   }
   .el-card {
-    --el-card-border-color: null;
+    border: unset;
     --el-card-bg-color: var(--dark-bg-color-light-2);
     .el-card {
       --el-card-bg-color: var(--dark-bg-color-light-1);

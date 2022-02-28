@@ -31,6 +31,10 @@ const { t } = useI18n({
 const pathname = ref("");
 
 // 夜间模式
+let date = new Date();
+if (date.getHours() > 21 || date.getHours() < 7) {
+  changeMode();
+}
 function changeMode() {
   store.darkMode = !store.darkMode;
   document.body.classList.toggle("element-plus-dark");
@@ -84,8 +88,8 @@ onBeforeMount(() => {
   <div class="toolbar">
     <el-menu
       class="toolbar-nav"
-      mode="horizontal"
       :default-active="pathname"
+      mode="horizontal"
       router
     >
       <el-menu-item index="/">{{ t("home") }}</el-menu-item>
@@ -93,18 +97,20 @@ onBeforeMount(() => {
       <el-menu-item index="/rss">{{ t("rsshub") }}</el-menu-item>
       <div class="toolbar-action toolbar-side">
         <el-space class="sub-action" wrap>
-          <a v-for="live in store.getLive" target="_blank" :href="live.link">
+          <a v-for="live in store.getLive" :href="live.link" target="_blank">
             <el-avatar :src="live.avatar"></el-avatar>
           </a>
           <el-button
             @click="changeMode"
             :icon="store.darkMode ? Sunny : Moon"
+            aria-label="change Mode"
             size="large"
             circle
           ></el-button>
           <el-button
             @click="changeLanguage"
             :icon="Switch"
+            aria-label="change Language"
             size="large"
             circle
           ></el-button>

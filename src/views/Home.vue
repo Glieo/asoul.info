@@ -84,7 +84,7 @@ onBeforeMount(() => {
   <el-row class="article-box" justify="center">
     <el-col :md="20" :sm="21">
       <el-card :body-style="{ padding: '0px' }" shadow="hover">
-        <el-carousel height="auto" trigger="click" indicator-position="outside">
+        <el-carousel height="auto" indicator-position="outside" trigger="click">
           <el-skeleton :loading="store.loading.articles" animated>
             <template #template>
               <el-carousel-item class="skeleton-article">
@@ -96,12 +96,13 @@ onBeforeMount(() => {
             </template>
             <template #default>
               <img
+                class="toolImg"
                 :src="store.getArticles[0].image"
                 alt="toolImg"
-                class="toolImg"
+                referrerpolicy="no-referrer"
               />
               <el-carousel-item v-for="item in store.getArticles">
-                <a target="_blank" :href="item.link">
+                <a :href="item.link" target="_blank">
                   <img
                     :src="item.image"
                     :alt="item.image"
@@ -174,11 +175,11 @@ onBeforeMount(() => {
               <el-table-column :label="t(`fans`)">
                 <template #default="scope">
                   <el-popover
-                    placement="top-start"
+                    :content="scope.row.followers.toLocaleString()"
                     :title="t(`new`)"
                     :width="200"
+                    placement="top-start"
                     trigger="hover"
-                    :content="scope.row.followers.toLocaleString()"
                   >
                     <template #reference>{{ scope.row.count }}</template>
                   </el-popover>
