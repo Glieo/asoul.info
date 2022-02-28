@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+
 import { VitePWA } from "vite-plugin-pwa";
 
 import AutoImport from "unplugin-auto-import/vite";
@@ -8,6 +9,11 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./",
+  build: {
+    assetsInlineLimit: 262144,
+  },
+
   css: {
     preprocessorOptions: {
       scss: {
@@ -19,6 +25,14 @@ export default defineConfig({
 
   plugins: [
     vue(),
+
+    AutoImport({
+      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+    }),
+
     VitePWA({
       includeAssets: [
         "404.html",
@@ -57,18 +71,8 @@ export default defineConfig({
         ],
       },
     }),
-    AutoImport({
-      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
-    }),
-    Components({
-      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
-    }),
   ],
 
-  base: "./",
-  build: {
-    assetsInlineLimit: 262144,
-  },
   server: {
     host: true,
   },
