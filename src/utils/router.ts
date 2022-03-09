@@ -8,6 +8,10 @@ const routes = [
     component: () => import("../views/Dynamic.vue"),
   },
   {
+    path: "/shorty",
+    component: () => import("../views/Shorty.vue"),
+  },
+  {
     path: "/rss",
     component: () => import("../views/RSSHub.vue"),
   },

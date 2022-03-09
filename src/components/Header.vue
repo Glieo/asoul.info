@@ -16,12 +16,14 @@ const { t } = useI18n({
     zh: {
       home: "首页",
       dynamic: "动态",
+      shorty: "短链",
       rsshub: "RSS订阅",
       live: "{msg} 正在直播",
     },
     en: {
       home: "Home",
       dynamic: "Dynamics",
+      shorty: "Shorty",
       rsshub: "RSSHub",
       live: "{msg} is broadcasting live",
     },
@@ -94,6 +96,7 @@ onBeforeMount(() => {
     >
       <el-menu-item index="/">{{ t("home") }}</el-menu-item>
       <el-menu-item index="/dynamic">{{ t("dynamic") }}</el-menu-item>
+      <el-menu-item index="/shorty">{{ t("shorty") }}</el-menu-item>
       <el-menu-item index="/rss">{{ t("rsshub") }}</el-menu-item>
       <div class="toolbar-action toolbar-side">
         <el-space class="sub-action" wrap>

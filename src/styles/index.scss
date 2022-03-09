@@ -14,10 +14,10 @@
   $popper: (
     "border-radius": 9px,
   ),
-  $border-radius:(
+  $border-radius: (
     "base": 9px,
-    'small': 7px,
-  ),
+    "small": 7px,
+  )
 );
 
 .el-cascader-menu {
@@ -36,6 +36,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.radio-box {
+  flex-direction: column;
+  align-items: flex-start;
 }
 .info-box {
   margin-bottom: 10px;
