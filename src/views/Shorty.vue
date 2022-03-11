@@ -54,7 +54,7 @@ const isValidated = computed(() => {
 // 提交api
 function submit() {
   getting.value = true;
-  fetch("https://shorty.asoul.info/create", {
+  fetch("https://asoul.info/create", {
     method: "post",
     body: new URLSearchParams({
       url: url_prefix.value + longUrl.value,
@@ -78,7 +78,7 @@ function submit() {
         message: "Url: asoul.info/" + slug.value,
         position: "bottom-right",
         onClick: () => {
-          window.open("http://asoul.info/" + slug.value);
+          window.open("https://asoul.info/" + slug.value);
         },
       });
     })
@@ -172,7 +172,7 @@ const example_url = computed(() => {
           </el-radio-group>
           <el-tooltip :content="example_url" placement="top">
             <el-link
-              :href="`http://` + example_url"
+              :href="`https://` + example_url"
               :underline="false"
               target="_blank"
               type="primary"
